@@ -137,7 +137,6 @@ model_history=classifier.fit_generator(
                                         validation_data=valid_set,
                                         validation_steps=len(valid_set),
                                         verbose=1)
-
 EndTime=time.time()
 print("############### Total Time Taken: ", round((EndTime-StartTime)/60), 'Minutes #############')
 
