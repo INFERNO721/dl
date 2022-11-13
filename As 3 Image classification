@@ -82,6 +82,11 @@ TrainClasses=training_set.class_indices
 ResultMap={}
 for ballValue,ballName in zip(TrainClasses.values(),TrainClasses.keys()):
     ResultMap[ballValue]=ballName
+    
+    
+    
+    
+    
 import pickle
 with open(R"E:\Data Sets\Balls Classification\ResultsMap.pkl", 'wb') as f:
     pickle.dump(ResultMap, f, pickle.HIGHEST_PROTOCOL)
