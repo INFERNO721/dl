@@ -56,3 +56,9 @@ vect_file.close()
 
 cbow_output=gensim.models.KeyedVectors.load_word2vec_format("/content/drive/MyDrive/vector.txt", binary=False)
 cbow_output.most_similar(positive=["virus"])
+
+
+
+
+Corona.txt download link
+https://mega.nz/file/m9F2CLJS#OGOT2KvC_YKGhnnFIv8A61zTZQIiaew605jfdfI1Cuw
