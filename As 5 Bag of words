@@ -45,7 +45,7 @@ for i in range(10):
   print(i, cost)
 
 dimensions = 100
-vect_file=open("/content/drive/MyDrive/vector.txt", "w")
+vect_file=open("vector.txt", "w")
 vect_file.write('{} {}\n'.format(total_vocab, dimensions))
 
 weight=model.get_weights()[0]
