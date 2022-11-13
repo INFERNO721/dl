@@ -88,7 +88,7 @@ for ballValue,ballName in zip(TrainClasses.values(),TrainClasses.keys()):
     
     
 import pickle
-with open(R"E:\Data Sets\Balls Classification\ResultsMap.pkl", 'wb') as f:
+with open(R"ResultsMap.pkl", 'wb') as f:
     pickle.dump(ResultMap, f, pickle.HIGHEST_PROTOCOL)
 print("Mapping of Face and its ID",ResultMap)
 OutputNeurons=len(ResultMap)
