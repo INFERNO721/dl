@@ -25,27 +25,29 @@ train_datagen = ImageDataGenerator(
     horizontal_flip=True
 )
 test_datagen = ImageDataGenerator(rescale=1./255)
-
 training_set = train_datagen.flow_from_directory(
     TrainingImagePath,
     target_size=(128,128),
     batch_size=32,
     class_mode="categorical"
 )
-
 test_set = test_datagen.flow_from_directory(
     TestImagePath,
     target_size = (128,128),
     batch_size=32,
     class_mode="categorical"
 )
-
 valid_set = test_datagen.flow_from_directory(
     ValidationImagePath,
     target_size=(128,128),
     batch_size=32,
     class_mode="categorical"
 )
+
+
+
+
+
 
 
 def showImages(class_name):
@@ -63,32 +65,27 @@ def showImages(class_name):
 
 
 
+
+
 plt.figure(figsize = (20,20))
 for labels,number in training_set.class_indices.items():
   plt.subplot(6,6,number+1)
   showImages(labels)
-
 test_set.class_indices
 
 
 
-'''#################### Creating lookup table for all balls ##############################'''
-# class_indices have the numeric tag for each balls
-TrainClasses=training_set.class_indices
 
-# Storing the face and the numeric tag for future reference
+
+
+TrainClasses=training_set.class_indices
 ResultMap={}
 for ballValue,ballName in zip(TrainClasses.values(),TrainClasses.keys()):
     ResultMap[ballValue]=ballName
-
-# Saving the face map for future reference
 import pickle
 with open(R"E:\Data Sets\Balls Classification\ResultsMap.pkl", 'wb') as f:
     pickle.dump(ResultMap, f, pickle.HIGHEST_PROTOCOL)
-
 print("Mapping of Face and its ID",ResultMap)
-
-# The number of neurons for the output layer is equal to the number of faces
 OutputNeurons=len(ResultMap)
 print('\n The Number of output neurons: ', OutputNeurons)
 
@@ -102,26 +99,20 @@ from keras.layers import MaxPool2D
 from keras.layers import Flatten
 from keras.layers import Dense
 
+
+
+
+
 classifier= Sequential()
-
-
 classifier.add(Convolution2D(32, kernel_size=(3, 3), strides=(1, 1), input_shape=(128,128,3), activation='relu'))
-
 classifier.add(MaxPool2D(pool_size=(2,2)))
-
-''
 classifier.add(Convolution2D(64, kernel_size=(3, 3), strides=(1, 1), activation='relu'))
-
 classifier.add(MaxPool2D(pool_size=(2,2)))
-
-
 classifier.add(Flatten())
-
 classifier.add(Dense(256, activation='relu'))
-
 classifier.add(Dense(OutputNeurons, activation='softmax'))
-
 classifier.compile(loss='categorical_crossentropy', optimizer = 'rmsprop', metrics=["accuracy"])
+
 
 
 
@@ -130,11 +121,10 @@ classifier.summary()
 
 
 
-import time
-# Measuring the time taken by the model to train
-StartTime=time.time()
 
-# Starting the model training
+
+import time
+StartTime=time.time()
 model_history=classifier.fit_generator(
                                         training_set,
                                         steps_per_epoch=len(training_set),
@@ -149,26 +139,31 @@ print("############### Total Time Taken: ", round((EndTime-StartTime)/60), 'Minu
 
 
 
+
 accuracy = model_history.history['accuracy']
 val_accuracy  = model_history.history['val_accuracy']
-
 loss = model_history.history['loss']
 val_loss = model_history.history['val_loss']
 
 
 
-plt.figure(figsize=(15,10))
 
+
+plt.figure(figsize=(15,10))
 plt.subplot(2, 2, 1)
 plt.plot(accuracy, label = "Training accuracy")
 plt.plot(val_accuracy, label="Validation accuracy")
 plt.legend()
 plt.title("Training vs validation accuracy")
 
+
+
+
+
+
 plt.subplot(2,2,2)
 plt.plot(loss, label = "Training loss")
 plt.plot(val_loss, label="Validation loss")
 plt.legend()
 plt.title("Training vs validation loss")
-
 plt.show()
